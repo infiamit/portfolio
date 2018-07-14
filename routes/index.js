@@ -3,6 +3,7 @@ var router = express.Router();
 var ContactForm = require('../models/contactform');
 /* GET home page. */
 router.get('/', function(req, res, next) {
+ 
   res.render('index', { title: 'My Portfolio' });
 });
 
@@ -29,6 +30,7 @@ router.post('/', function(req,res,next){
       message:message
     });
     newContact.save();
+    console.log(process.env.dbpassword);
   }
   
   res.render('index', { title: 'My Portfolio' });
