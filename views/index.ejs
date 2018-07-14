@@ -169,6 +169,7 @@
             <% if(typeof errors !== 'undefined') error.forEach(function(error){ %>
             <div class="alert alert-danger"><%= error.msg %></div>
              <%});%>
+             <% if(typeof success !== 'undefined'){%> <div class="alert alert-success"><%= success %></div><%}%>
             <form   action="/" method="POST">
               <div class="control-group">
                 <div class="form-group floating-label-form-group controls mb-0 pb-2">

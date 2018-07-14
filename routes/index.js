@@ -33,7 +33,7 @@ router.post('/', function(req,res,next){
     console.log(process.env.dbpassword);
   }
   
-  res.render('index', { title: 'My Portfolio' });
+  res.render('index', { title: 'My Portfolio', success:'Your Message Successfully Received...' });
 });
 
 module.exports = router;
