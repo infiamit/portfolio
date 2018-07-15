@@ -88,3 +88,14 @@ function onListening() {
     : 'port ' + addr.port;
   debug('Listening on ' + bind);
 }
+
+
+
+var io = require('socket.io')(server);
+io.on('connection', function(socket){
+  console.log("connected");
+  socket.on('chat message', function(msg){
+    io.emit('chat message', msg);
+  });
+});
+ 

@@ -166,7 +166,7 @@
           <div class="col-lg-8 mx-auto">
             <!-- To configure the contact form email address, go to mail/contact_me.php and update the email address in the PHP file on line 19. -->
             <!-- The form should work on most web servers, but if the form is not working you may need to configure your web server differently. -->
-            <% if(typeof errors !== 'undefined') error.forEach(function(error){ %>
+            <% if(typeof error !== 'undefined') error.forEach(function(error){ %>
             <div class="alert alert-danger"><%= error.msg %></div>
              <%});%>
              <% if(typeof success !== 'undefined'){%> <div class="alert alert-success"><%= success %></div><%}%>
@@ -411,7 +411,7 @@
 
     <!-- Contact Form JavaScript -->
     <script src="/javascripts/jqBootstrapValidation.js"></script>
-    <script src="/javascripts/contact_me.js"></script>
+     
 
     <!-- Custom scripts for this template -->
     <script src="/javascripts/freelancer.min.js"></script>
