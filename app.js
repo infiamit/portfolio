@@ -42,6 +42,7 @@ app.use('/users', usersRouter);
 
 app.get('/chat', function(req, res){
   res.sendFile(__dirname + '/index.html');
+ 
 });
 
 // catch 404 and forward to error handler
