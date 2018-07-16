@@ -2,40 +2,83 @@
 <html>
   <head>
     <title>Socket.IO chat</title>
-  
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <link rel="stylesheet"  href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css" >
+   
     <style>
       * { margin: 0; padding: 0; box-sizing: border-box; }
       body { font: 13px Helvetica, Arial; }
       form { background: #000; padding: 3px; bottom:10px; position: fixed; margin: auto; width: 100%; }
       form input { border: 0; padding: 15px; width: 80%; margin-right: .5%; }
       form button { width: 15%; background: rgb(130, 224, 255); border: none; padding: 15px; }
-      #messages { list-style-type: none; margin: 0; padding: 0; }
-      #messages li { padding: 5px 10px; }
+      #messages { list-style-type: none; margin: 0; padding: 10px; }
+      #messages li { padding: 5px 10px; font-size: 15px; }
       #messages li:nth-child(odd) { background: #eee; }
       #messages { margin-bottom: 40px }
+      #username {position: fixed;
+top: 10px;
+right: 10px;
+width: 20%;
+height: 12%;
+padding: 20px;
+background: #ff0036;
+font-size: 20px;
+color: white; }
     </style>
   </head>
   <body>
     <ul id="messages"></ul>
+    <input type="text" placeholder="Enter Username" id='username'/>
     <form action="">
-      <input id="m" autocomplete="off" /><button>Send</button>
+      <input id="m" autocomplete="off" />
+   
+      <button>Send</button>
     </form>
     <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
     <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
     <script>
       $(function () {
         var socket = io();
-        $('form').submit(function(){
-          socket.emit('chat message', $('#m').val());
-          $('#m').val('');
-          return false;
+         $('#m').on('keypress', function(){
+          socket.emit('key press',$('#username').val());
         });
+
+        $('form').submit(function(){
+          if($('#username').val()==""){
+            alert("Enter Username First");
+            return false;
+          }else if($('#m').val()==""){
+            alert("Enter Message");
+          
+            return false;
+          }
+          
+          else
+         { socket.emit('chat message', {msg:$('#m').val(), username:$('#username').val()});
+          $('#m').val('');
+          return false;}
+        });
+
         socket.on('chat message', function(msg){
-          $('#messages').append($('<li>').text(msg));
+           var username=msg.username;
+           $('.'+username).remove();
+          var text= "<li><button  class='btn btn-success'>"+msg.username+" </button>&nbsp&nbsp&nbsp&nbsp"+msg.msg+"</li>";
+          $('#messages').append(text);
+          
           window.scrollTo(0, document.body.scrollHeight);
         });
+
+       
+
+        socket.on('key press', function(msg){
+            if($('.'+msg).length){}
+            else{
+           var text= "<div class='"+msg+"'><li>"+msg+" &nbsp is typing.....</li></div>";
+           $('#messages').append(text);
+         
+            }
+           
+         });
       });
     </script>
   </body>
