@@ -102,16 +102,17 @@ var io = require('socket.io')(server);
         if (users[i].id === socket.id) {
             users[i].msg=msg;
             update=true;
-            console.log("updated");
+            io.emit('users', users);
         }
  
     }
     if(update==false){
 
       users.push({id:socket.id,msg});
-      console.log("added");
+     
     }
-    io.emit('users', msg);
+    
+    io.emit('users', users);
    
  
   });
@@ -128,15 +129,20 @@ var io = require('socket.io')(server);
     var i = null; update=false;
     for (i = 0; users.length > i; i += 1) {
         if (users[i].id === socket.id) {
+          io.emit('disconnected', {id:users[i].id,msg:users[i].msg});
                users.splice(i,1);
              
             console.log("deleted");
             
         }
+
+      
     }
           
   
     
 
 });
+io.emit('users', users);
+
 });
