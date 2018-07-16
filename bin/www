@@ -93,13 +93,50 @@ function onListening() {
 
 var io = require('socket.io')(server);
 
-module.exports=io;
+ var users=[];
  io.on('connection', function(socket){
-  console.log("connected");
+  
+  socket.on('add user', function(msg){
+    var i = null; update=false;
+    for (i = 0; users.length > i; i += 1) {
+        if (users[i].id === socket.id) {
+            users[i].msg=msg;
+            update=true;
+            console.log("updated");
+        }
+ 
+    }
+    if(update==false){
+
+      users.push({id:socket.id,msg});
+      console.log("added");
+    }
+    io.emit('users', msg);
+   
+ 
+  });
+  
   socket.on('chat message', function(msg){
     io.emit('chat message', msg);
   });
   socket.on('key press', function(msg){
     io.emit('key press', msg);
   });
+
+
+  socket.on('disconnect', function () {
+    var i = null; update=false;
+    for (i = 0; users.length > i; i += 1) {
+        if (users[i].id === socket.id) {
+               users.splice(i,1);
+             
+            console.log("deleted");
+            
+        }
+    }
+          
+  
+    
+
+});
 });

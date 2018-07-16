@@ -17,23 +17,41 @@
       #messages { margin-bottom: 40px }
       #username {position: fixed;
 top: 10px;
-right: 10px;
-width: 20%;
+right: 40px;
+width: 25%;
 height: 12%;
 padding: 20px;
 background: #ff0036;
 font-size: 20px;
 color: white; }
+#but{
+  position: fixed;
+  top: 10px;
+right: 40px;
+width: 8%;
+height: 12%;
+padding: 10px;
+}
+
+#online{
+  position: fixed;
+  right: 5px;
+  top: 200px;
+  width: 30%;
+  height: 60%;
+  border: solid 1px #ff0036;
+}
     </style>
   </head>
   <body>
     <ul id="messages"></ul>
-    <input type="text" placeholder="Enter Username" id='username'/>
+    <div id="addUser"><input type="text" placeholder="Enter Username" id='username'/><button id="but" class="btn btn-danger">AddUser</button></div>
     <form action="">
       <input id="m" autocomplete="off" />
    
       <button>Send</button>
     </form>
+    <div id="online"><center ><h1> Online Users</h1></center></div>
     <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
     <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
     <script>
@@ -59,6 +77,8 @@ color: white; }
           return false;}
         });
 
+      
+
         socket.on('chat message', function(msg){
            var username=msg.username;
            $('.'+username).remove();
@@ -79,6 +99,23 @@ color: white; }
             }
            
          });
+
+ socket.on('users', function(users){
+            if($('.'+users).length){console.log("found");}
+            else
+            {
+              console.log("else");
+           var text= "<div class='"+users +"'><li>"+users+"&nbsp joined</li></div>";
+           $('#online').append(text);
+         
+            }
+           console.log(users);
+         });
+        $("#but").click(function(){
+          socket.emit('add user', $('#username').val());
+          
+          return false;
+        });
       });
     </script>
   </body>
