@@ -11,23 +11,28 @@
   <body>
       <div class="container-fluid">
           <div class="row"><ul id="messages" class="col-md-8"></ul>
-    <div id="addUser "class="col-md-4">
-      <div class="container-fluid">
+    <div id="addUser" class="col-md-4 position-fixed">
+      
            
           <div class="row"  >  
       <input type="text" placeholder="Enter Username" class="col-md-8 col-xs-12"id='username'/>
-      <button id="but" class="btn btn-danger col-md-4 col-xs-12 ">AddUser</button></div></div></div>
-    </div> </div>
+      <button id="but" class="btn btn-danger col-md-4 col-xs-12 ">AddUser</button></div>
+    
+
+      
+    <div id="online" class="d-none d-md-block  "><center ><h1> Online Users</h1></center></div>
+    </div>
   </div>
+       
+  
     <div class="row">
     <form action="">
       <input id="m" autocomplete="off" class="col-md-8" />
    
-      <button class="col-md-4">Send</button>
+      <button class="col-md-3">Send</button>
     </form>
   </div>
     
-    <div id="online"><center ><h1> Online Users</h1></center></div>
   </div>
     <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
     <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
@@ -122,5 +127,9 @@
         });
       });
     </script>
+
+
+
+
   </body>
 </html>
