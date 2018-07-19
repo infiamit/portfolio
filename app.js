@@ -25,7 +25,7 @@ app.use(express.urlencoded({
 app.use(cookieParser());
 app.use(session({
     secret: "My_secret",
-     
+    store: new MongoStore({url: 'mongodb://' + process.env.dbuser + ':' + process.env.dbpassword + '@ds137631.mlab.com:37631/singhportfolio'}),
     proxy: true,
     resave: true,
     saveUninitialized: true
