@@ -4,7 +4,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var expressValidator = require('express-validator');
 var session = require('express-session');
-//const bcrypt = require('bcrypt');
+const bcrypt = require('bcrypt');
 
 var express = require('express');
 var indexRouter = require('./routes/index');
