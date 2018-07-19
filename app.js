@@ -1,3 +1,4 @@
+var compression = require('compression');
 var createError = require('http-errors');
 var path = require('path');
 var cookieParser = require('cookie-parser');
@@ -11,8 +12,8 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 const MongoStore = require('connect-mongo')(session);
 var app = express();
-
-
+app.disable('x-powered-by');
+app.use(compression())
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
