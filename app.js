@@ -9,7 +9,7 @@ var session = require('express-session');
 var express = require('express');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-
+const MongoStore = require('connect-mongo')(session);
 var app = express();
 
 
