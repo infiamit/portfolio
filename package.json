@@ -6,7 +6,6 @@
         "start": "node ./bin/www"
     },
     "dependencies": {
-        "ab-tool": "^0.2.0",
         "bcrypt": "^3.0.0",
         "connect-mongo": "^2.0.1",
         "cookie-parser": "~1.4.3",
@@ -16,7 +15,7 @@
         "express-session": "^1.15.6",
         "express-validator": "^5.2.0",
         "http-errors": "~1.6.2",
-        "mongoose": "^5.2.3",
+        "mongoose": "^5.2.4",
         "morgan": "~1.9.0",
         "socket.io": "^1.7.3"
     }
