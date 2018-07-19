@@ -1,5 +1,5 @@
 var SignupChat = require('../models/chat');
-var bcrypt = require('bcrypt');
+//var bcrypt = require('bcrypt');
 
 module.exports.loginComplete = function (req, res) {
 
@@ -28,7 +28,7 @@ module.exports.loginComplete = function (req, res) {
             }, function (error, data) {
                 if (error) throw error;
                 if (data) {
-                    bcrypt.compare(password, data.password, function (error, bool) {
+                  /*  bcrypt.compare(password, data.password, function (error, bool) {
                         if (error) throw error;
                         if (bool == false) {
                             res.render("./chatViews/login", {
@@ -46,7 +46,7 @@ module.exports.loginComplete = function (req, res) {
 
                             res.redirect("/chat");
                         }
-                    });
+                    });*/
                 } else {
                     res.render("./chatViews/login", {
                         error: [{
@@ -70,7 +70,7 @@ module.exports.loginComplete = function (req, res) {
                     });
                 } else {
 
-                    bcrypt.compare(password, data.password, function (error, bool) {
+                   /* bcrypt.compare(password, data.password, function (error, bool) {
                         if (error) throw error;
                         if (bool == false) {
                             res.render("./chatViews/login", {
@@ -88,7 +88,7 @@ module.exports.loginComplete = function (req, res) {
                             res.redirect("/chat");
                         }
                     });
-
+*/
 
                 }
 
@@ -156,7 +156,7 @@ module.exports.signupComplete = function (req, res) {
                 });
             } else {
 
-                bcrypt.hash(password, 10, function (err, hash) {
+              /*  bcrypt.hash(password, 10, function (err, hash) {
                     if (error) throw error;
 
                     var newSignup = new SignupChat({
@@ -181,7 +181,7 @@ module.exports.signupComplete = function (req, res) {
                     });
                 });
 
-
+*/
 
             }
         });
