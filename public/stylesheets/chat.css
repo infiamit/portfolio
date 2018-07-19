@@ -1,42 +1,80 @@
- 
-* { margin: 0; padding: 0; box-sizing: border-box; }
-body { font: 13px Helvetica, Arial; width: 100%; }
-form { background: #000; padding: 3px; bottom:0px; position: fixed; margin: auto; width: 100%; }
-form input {   padding: 15px; width: 75%; margin-right: .5%; }
-form button { width: 12%; background: rgb(130, 224, 255); border: none; padding: 15px; }
-#messages {  list-style-type: none; margin: 0; padding: 10px; }
-#messages li { padding: 5px 10px; font-size: 15px; }
-#messages li:nth-child(odd) { background: #eee; }
-#messages { margin-bottom: 40px }
-@media only screen and (max-width: 768px) {
-  #messages{
-    top:100px;
-  }
-} 
-
-#username { 
- 
-  
-padding: 20px;
-background: #ff0036;
-font-size: 20px;
-color: white; 
- 
-}
- #but{
-    right: 0px;
-
-    
+ * {
+   margin: 0;
+   padding: 0;
+   box-sizing: border-box;
  }
-#addUser{
- 
-    right: 0px;
-}
-#online{
-  right: 5px;
-  top: 100px;
-  height: 350px;
-  border: solid 1px #ff0036;
-  position: relative;
-}
 
+ body {
+   font: 13px Helvetica, Arial;
+   width: 100%;
+ }
+
+ form {
+   background: #000;
+   padding: 3px;
+   bottom: 0px;
+   position: fixed;
+   margin: auto;
+   width: 100%;
+ }
+
+ form input {
+   padding: 15px;
+   width: 75%;
+   margin-right: .5%;
+ }
+
+ form button {
+   width: 12%;
+   background: rgb(130, 224, 255);
+   border: none;
+   padding: 15px;
+ }
+
+ #messages {
+   list-style-type: none;
+   margin: 0;
+   padding: 10px;
+ }
+
+ #messages li {
+   padding: 5px 10px;
+   font-size: 15px;
+ }
+
+ #messages li:nth-child(odd) {
+   background: #eee;
+ }
+
+ #messages {
+   margin-bottom: 40px
+ }
+
+ @media only screen and (max-width: 768px) {
+   #messages {
+     top: 100px;
+   }
+ }
+
+ #username {
+   padding: 20px;
+   background: #ff0036;
+   font-size: 20px;
+   color: white;
+ }
+
+ #but {
+   right: 0px;
+ }
+
+ #addUser {
+   right: 0px;
+ }
+
+ #online {
+   right: 5px;
+   top: 100px;
+   height: 350px;
+   border: solid 1px #ff0036;
+   position: relative;
+ }

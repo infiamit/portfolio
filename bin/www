@@ -34,19 +34,19 @@ server.on('listening', onListening);
  */
 
 function normalizePort(val) {
-  var port = parseInt(val, 10);
+    var port = parseInt(val, 10);
 
-  if (isNaN(port)) {
-    // named pipe
-    return val;
-  }
+    if (isNaN(port)) {
+        // named pipe
+        return val;
+    }
 
-  if (port >= 0) {
-    // port number
-    return port;
-  }
+    if (port >= 0) {
+        // port number
+        return port;
+    }
 
-  return false;
+    return false;
 }
 
 /**
@@ -54,27 +54,27 @@ function normalizePort(val) {
  */
 
 function onError(error) {
-  if (error.syscall !== 'listen') {
-    throw error;
-  }
+    if (error.syscall !== 'listen') {
+        throw error;
+    }
 
-  var bind = typeof port === 'string'
-    ? 'Pipe ' + port
-    : 'Port ' + port;
+    var bind = typeof port === 'string' ?
+        'Pipe ' + port :
+        'Port ' + port;
 
-  // handle specific listen errors with friendly messages
-  switch (error.code) {
-    case 'EACCES':
-      console.error(bind + ' requires elevated privileges');
-      process.exit(1);
-      break;
-    case 'EADDRINUSE':
-      console.error(bind + ' is already in use');
-      process.exit(1);
-      break;
-    default:
-      throw error;
-  }
+    // handle specific listen errors with friendly messages
+    switch (error.code) {
+        case 'EACCES':
+            console.error(bind + ' requires elevated privileges');
+            process.exit(1);
+            break;
+        case 'EADDRINUSE':
+            console.error(bind + ' is already in use');
+            process.exit(1);
+            break;
+        default:
+            throw error;
+    }
 }
 
 /**
@@ -82,67 +82,70 @@ function onError(error) {
  */
 
 function onListening() {
-  var addr = server.address();
-  var bind = typeof addr === 'string'
-    ? 'pipe ' + addr
-    : 'port ' + addr.port;
-  debug('Listening on ' + bind);
+    var addr = server.address();
+    var bind = typeof addr === 'string' ?
+        'pipe ' + addr :
+        'port ' + addr.port;
+    debug('Listening on ' + bind);
 }
 
 
 
 var io = require('socket.io')(server);
 
- var users=[];
- io.on('connection', function(socket){
-  
-  socket.on('add user', function(msg){
-    var i = null; update=false;
-    for (i = 0; users.length > i; i += 1) {
-        if (users[i].id === socket.id) {
-            users[i].msg=msg;
-            update=true;
-            io.emit('users', users);
-        }
- 
-    }
-    if(update==false){
+var users = [];
+io.on('connection', function (socket) {
 
-      users.push({id:socket.id,msg});
-     
-    }
     
+    socket.on('add user', function (msg) {
+        var i = null;
+        update = false;
+        for (i = 0; users.length > i; i += 1) {
+            if (users[i].id === socket.id) {
+                users[i].msg = msg;
+                update = true;
+                io.emit('users', users);
+            }
+
+        }
+        if (update == false) {
+
+            users.push({
+                id: socket.id,
+                msg
+            });
+
+        }
+
+        io.emit('users', users);
+
+
+    });
+
+    socket.on('chat message', function (msg) {
+        io.emit('chat message', msg);
+    });
+    socket.on('key press', function (msg) {
+        io.emit('key press', msg);
+    });
+
+
+    socket.on('disconnect', function () {
+        var i = null;
+        update = false;
+        for (i = 0; users.length > i; i += 1) {
+            if (users[i].id === socket.id) {
+                io.emit('disconnected', {
+                    id: users[i].id,
+                    msg: users[i].msg
+                });
+                users.splice(i, 1);
+
+                console.log("deleted");
+
+            }
+        }
+    });
     io.emit('users', users);
-   
- 
-  });
-  
-  socket.on('chat message', function(msg){
-    io.emit('chat message', msg);
-  });
-  socket.on('key press', function(msg){
-    io.emit('key press', msg);
-  });
-
-
-  socket.on('disconnect', function () {
-    var i = null; update=false;
-    for (i = 0; users.length > i; i += 1) {
-        if (users[i].id === socket.id) {
-          io.emit('disconnected', {id:users[i].id,msg:users[i].msg});
-               users.splice(i,1);
-             
-            console.log("deleted");
-            
-        }
-
-      
-    }
-          
-  
-    
-
-});
-io.emit('users', users);
 
 });

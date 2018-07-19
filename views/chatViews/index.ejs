@@ -1,0 +1,153 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>Socket.IO chat</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/stylesheets/chat.css">
+
+
+</head>
+
+<body>
+<div class=" alert alert-success">
+ <center><h3> Logged in as  <%=user%>. click to &nbsp<a href="/chat/logout"><button class="btn btn-danger">logout</button></a></h3></center>
+</div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <ul id="messages" class="col-md-8"></ul>
+            <div id="addUser" class="col-md-4 position-fixed">
+
+                <div class="row">
+                    <input type="text" placeholder="Enter Username" Value="<%=user%>" class="col-md-8 col-xs-12" id='username' />
+                    <button id="but" class="btn btn-danger col-md-4 col-xs-12 ">AddUser</button>
+                </div>
+
+
+
+                <div id="online" class="d-none d-md-block  ">
+                    <center>
+                        <h1> Online Users</h1>
+                    </center>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <form action="">
+                <input id="m" autocomplete="off" class="col-md-8" />
+
+                <button class="col-md-3">Send</button>
+            </form>
+        </div>
+
+    </div>
+    <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+    <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+    <script>
+        $(function () {
+            var socket = io();
+            $('#m').on('keypress', function () {
+                socket.emit('key press', $('#username').val());
+            });
+
+            $('form').submit(function () {
+                if ($('#username').val() == "") {
+                    alert("Enter Username First");
+                    return false;
+                } else if ($('#m').val() == "") {
+                    alert("Enter Message");
+
+                    return false;
+                } else {
+                    socket.emit('chat message', {
+                        msg: $('#m').val(),
+                        username: $('#username').val()
+                    });
+                    $('#m').val('');
+                    return false;
+                }
+            });
+
+
+
+            socket.on('chat message', function (msg) {
+                var username = msg.username;
+                $('.' + username).remove();
+                var text = "<li><button  class='btn btn-success'>" + msg.username +
+                    " </button>&nbsp&nbsp&nbsp&nbsp" +
+                    msg.msg + "</li>";
+                $('#messages').append(text);
+
+                window.scrollTo(0, document.body.scrollHeight);
+            });
+
+
+
+            socket.on('key press', function (msg) {
+                if ($('.' + msg).length) {} else {
+                    var text = "<div class='" + msg + "'><li>" + msg +
+                        " &nbsp is typing.....</li></div>";
+                    $('#messages').append(text);
+
+                }
+
+            });
+
+            socket.on('disconnected', function (users) {
+                console.log(users);
+                if ($('.' + users.id).length) {
+                    var text = "<div class='" + users.id + "'><li>" + users.msg +
+                        "&nbsp left</li></div>";
+                    $('.' + users.id).replaceWith(text);
+                } else {
+
+
+                }
+            });
+
+
+           
+
+
+            socket.on('users', function (users) {
+                users.forEach(item => {
+                    if ($('.' + item.id).length) {
+                        if ($('.' + item.id).val() === item.msg) {} else {
+                            var text = "<div class='" + item.id + "'><li>" + item.msg +
+                                "&nbsp joined</li></div>";
+                            $('.' + item.id).remove();
+                            $('#online').append(text);
+                        }
+                    } else {
+
+                        var text = "<div class='" + item.id + "'><li>" + item.msg +
+                            "&nbsp joined</li></div>";
+                        $('#online').append(text);
+
+                    }
+                });
+
+
+
+            });
+
+
+
+            $("#but").click(function () {
+                socket.emit('add user', $('#username').val());
+
+                return false;
+            });
+        });
+    </script>
+
+
+
+
+</body>
+
+</html>
