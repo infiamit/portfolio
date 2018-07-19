@@ -41,7 +41,7 @@ module.exports.loginComplete = function (req, res) {
                             req.session.user = {
                                 email: data.email,
                                 password: data.password,
-                                username:username
+                                username: data.username
                             };
 
                             res.redirect("/chat");
@@ -82,7 +82,7 @@ module.exports.loginComplete = function (req, res) {
                             req.session.user = {
                                 email: data.email,
                                 password: data.password,
-                                username:username
+                                username: data.username
                             };
 
                             res.redirect("/chat");
@@ -113,12 +113,12 @@ module.exports.login = function (req, res) {
 
 }
 module.exports.signup = function (req, res) {
-    if(req.session.user){
+    if (req.session.user) {
         res.redirect("/chat");
-    }else{
+    } else {
         res.render("./chatViews/registration");
     }
-    
+
 }
 
 module.exports.signupComplete = function (req, res) {
@@ -173,7 +173,7 @@ module.exports.signupComplete = function (req, res) {
                         req.session.user = {
                             email: email,
                             password: hash,
-                            username:username
+                            username: username
                         };
                         res.render("./chatViews/registration", {
                             success: "Registration successful"

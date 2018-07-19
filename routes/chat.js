@@ -6,8 +6,10 @@ router.get('/', function (req, res) {
 
     //  res.sendFile(path.resolve('index.html'));  OR
     if(req.session.user){
+        console.log(req.session.user.username);
         res.render('./chatViews/index', {
             user: req.session.user.username
+        
         });
     }else
     res.redirect("/chat/login");
