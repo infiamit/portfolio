@@ -22,8 +22,6 @@ if(process.env.NODE_ENV === 'production'){
  app.set('view cache', true);
 }
 
-
-
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({
@@ -31,11 +29,12 @@ app.use(express.urlencoded({
 }));
 app.use(cookieParser());
 app.use(session({
-    secret: "My_secret",
+    secret: "dirtydancer",
+    cookie: { maxAge: 24 * 60 * 60  },
     store: new MongoStore({url: 'mongodb://' + process.env.dbuser + ':' + process.env.dbpassword + '@ds137631.mlab.com:37631/singhportfolio'}),
     proxy: true,
-    resave: true,
-    saveUninitialized: true
+    resave: false,
+    saveUninitialized: false
 }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(expressValidator({
