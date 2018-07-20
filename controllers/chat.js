@@ -4,8 +4,6 @@ var bcrypt = require('bcrypt');
 module.exports.loginComplete = function (req, res) {
 
 
-
-
     var password = req.body.password;
     var username = req.body.username;
     var email = req.body.username;
@@ -54,7 +52,6 @@ module.exports.loginComplete = function (req, res) {
                         }]
                     });
                 }
-
             });
         } else {
             SignupChat.findOne({
