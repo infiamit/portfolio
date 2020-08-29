@@ -28,14 +28,14 @@ app.use(express.urlencoded({
     extended: false
 }));
 app.use(cookieParser());
-app.use(session({
-    secret: "dirtydancer",
-    cookie: { maxAge: 24 * 60 * 60  },
-    store: new MongoStore({url: 'mongodb://' + process.env.dbuser + ':' + process.env.dbpassword + '@ds137631.mlab.com:37631/singhportfolio'}),
-    proxy: true,
-    resave: false,
-    saveUninitialized: false
-}));
+// app.use(session({
+//     secret: "dirtydancer",
+//     cookie: { maxAge: 24 * 60 * 60  },
+//     store: new MongoStore({url: 'mongodb://' + process.env.dbuser + ':' + process.env.dbpassword + '@ds137631.mlab.com:37631/singhportfolio'}),
+//     proxy: true,
+//     resave: false,
+//     saveUninitialized: false
+// }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(expressValidator({
     errorFormatter: function (param, msg, value) {
